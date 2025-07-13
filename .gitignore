@@ -1,10 +1,40 @@
-.env
+# Python
 __pycache__/
-*.pyc
-*.ipynb
-db.sqlite3
-
-data/
-
-
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.env
+.env
 venv/
+.envrc
+*.egg-info/
+dist/
+build/
+
+# DBT
+dbt_modules/
+dbt_packages/
+target/
+dbt_packages.yml
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and cache
+logs/
+*.log
+*.pid
+
+# YOLOv8 weight files
+*.pt
+
+# Docker
