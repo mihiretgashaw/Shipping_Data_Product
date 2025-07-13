@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: fct_image_detections
+    description: Fact table containing object detection results from YOLOv8.
+    columns:
+      - name: message_id
+        description: Foreign key to fct_messages
+        tests:
+          - not_null
+      - name: object_class
+        description: Detected object class (e.g., "person", "car")
+      - name: confidence_score
+        description: Confidence score for the detection
