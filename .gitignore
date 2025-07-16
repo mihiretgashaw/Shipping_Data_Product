@@ -1,0 +1,76 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.env
+.env
+venv/
+.envrc
+*.egg-info/
+dist/
+build/
+
+# DBT
+dbt_modules/
+dbt_packages/
+target/
+dbt_packages.yml
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and cache
+logs/
+*.log
+*.pid
+
+# YOLOv8 weight files
+*.pt
+
+# Docker
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+
+# Jupyter notebooks checkpoints
+*.ipynb_checkpoints
+
+# SQLite database file
+db.sqlite3
+
+# Environment variables file (sensitive info)
+.env
+
+# Data directory (raw or processed data)
+data/
+
+# Virtual environment folder
+venv/
+
+# Dagster temp folders
+.tmp_dagster_home_*/
+
+# Telegram session file
+scraper_session.session
+
+# Logs
+scraping.log
+
+# Build/output folders
+target/
+
+# Optional: YOLO weights file if you don't want to commit it
+telegram_project/yolov8n.pt
+

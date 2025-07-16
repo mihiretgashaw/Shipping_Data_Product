@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-dotenv
+asyncpg
+sqlalchemy
+telethon
+dbt-core
+dbt-postgres
+dagster
+opencv-python
+ultralytics
+
