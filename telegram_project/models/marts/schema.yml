@@ -12,3 +12,5 @@ models:
         description: Detected object class (e.g., "person", "car")
       - name: confidence_score
         description: Confidence score for the detection
+
+        version: 2

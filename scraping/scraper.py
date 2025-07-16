@@ -32,42 +32,53 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# Prepare data lake folder
-today = datetime.now().strftime("%Y-%m-%d")
-base_path = Path(f"data/raw/telegram_messages/{today}")
-base_path.mkdir(parents=True, exist_ok=True)
+def scrape_channels():
+    today = datetime.now().strftime("%Y-%m-%d")
+    base_path = Path(f"data/raw/telegram_messages/{today}")
+    base_path.mkdir(parents=True, exist_ok=True)
 
-# Scrape data
-with TelegramClient("scraper_session", api_id, api_hash) as client:
-    for name, url in CHANNELS.items():
-        messages_data = []
-        try:
-            logging.info(f"Scraping channel: {name}")
-            for message in client.iter_messages(url, limit=200):
-                msg = {
-                    "id": message.id,
-                    "date": str(message.date),
-                    "sender_id": message.sender_id,
-                    "message": message.message,
-                    "media": None,
-                }
+    results = {}
 
-                # Save image if present
-                if message.photo:
-                    media_path = base_path / f"{name}_{message.id}.jpg"
-                    client.download_media(message, file=media_path)
-                    msg["media"] = str(media_path)
+    with TelegramClient("scraper_session", api_id, api_hash) as client:
+        for name, url in CHANNELS.items():
+            messages_data = []
+            try:
+                logging.info(f"Scraping channel: {name}")
+                for message in client.iter_messages(url, limit=200):
+                    msg = {
+                        "id": message.id,
+                        "date": str(message.date),
+                        "sender_id": message.sender_id,
+                        "message": message.message,
+                        "media": None,
+                    }
 
-                messages_data.append(msg)
+                    # Save image if present
+                    if message.photo:
+                        media_path = base_path / f"{name}_{message.id}.jpg"
+                        client.download_media(message, file=media_path)
+                        msg["media"] = str(media_path)
 
-            # Save messages to JSON
-            file_path = base_path / f"{name}.json"
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(messages_data, f, ensure_ascii=False, indent=2)
+                    messages_data.append(msg)
 
-            logging.info(f"✅ Saved {len(messages_data)} messages for {name} → {file_path}")
+                # Save messages to JSON
+                file_path = base_path / f"{name}.json"
+                with open(file_path, "w", encoding="utf-8") as f:
+                    json.dump(messages_data, f, ensure_ascii=False, indent=2)
 
-        except ChannelInvalidError:
-            logging.error(f"❌ Invalid channel URL: {url}")
-        except Exception as e:
-            logging.error(f"❌ Error scraping {name}: {str(e)}\n{traceback.format_exc()}")
+                logging.info(f"✅ Saved {len(messages_data)} messages for {name} → {file_path}")
+                results[name] = len(messages_data)
+
+            except ChannelInvalidError:
+                logging.error(f"❌ Invalid channel URL: {url}")
+                results[name] = 0
+            except Exception as e:
+                logging.error(f"❌ Error scraping {name}: {str(e)}\n{traceback.format_exc()}")
+                results[name] = 0
+
+    return results
+
+
+if __name__ == "__main__":
+    scrape_results = scrape_channels()
+    print(f"Scraping completed: {scrape_results}")

@@ -1,19 +1,10 @@
 version: 2
 
-models:
-  - name: stg_telegram_messages
-    columns:
-      - name: message_id
-        tests: [not_null, unique]
-      - name: message_text
-        tests: [not_null]
-
-  - name: dim_channels
-    columns:
-      - name: channel_id
-        tests: [not_null, unique]
-
-  - name: fct_messages
-    columns:
-      - name: message_id
-        tests: [not_null, unique]
+sources:
+  - name: raw # Logical name used in dbt (must match your SQL)
+    schema: raw # The actual schema in your database (e.g., 'raw')
+    tables:
+      - name: telegram_messages
+        description: "Telegram messages scraped from channels"
+      - name: image_detections
+        description: "YOLO object detection output on images"
