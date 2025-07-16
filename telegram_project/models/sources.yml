@@ -1,0 +1,9 @@
+# version: 2
+
+# sources:
+#   - name: raw
+#     description: "Raw data schema"
+#     schema: raw
+#     tables:
+#       - name: image_detections
+#         description: "Raw image detections data"
